@@ -20,8 +20,12 @@
         </style>
     </head>
     <body>
-        <h1>
-            Task-search-form-real-estate
-        </h1>
+        <div id="app">
+            <router-view></router-view>
+        </div>
+        <script src="/js/manifest.js"></script>
+        <script src="/js/vendor.js"></script>
+        <!-- <script src="/js/app.js"></script> -->
+        <script src="{{ mix('/js/app.js') }}"></script>
     </body>
 </html>
