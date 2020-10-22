@@ -80,16 +80,18 @@
       <el-col :span="24" justify="center">
         <el-form-item>
           <el-button
+            @click="filterProperties(1)"
             type="primary"
-            @click="filterProperties"
           >Find</el-button>
-          <el-button>Clear</el-button>
+          <el-button
+            @click="clearFilter"
+          >Clear</el-button>
         </el-form-item>
       </el-col>
     </el-row>
   </el-form>
   <el-table
-    :data="tableDataProperties"
+    :data="properties.data"
     empty-text="No results were found."
     style="width: 100%"
     v-loading="loading"
@@ -101,14 +103,24 @@
       v-for="column in columns"
     ></el-table-column>
   </el-table>
+  <el-pagination
+    :current-page="+properties.meta.current_page"
+    :page-size="+properties.meta.per_page"
+    :page-sizes="[3, 5, 10, 50, 100]"
+    :total="+properties.meta.total"
+    @current-change="currentChange"
+    @size-change="sizeChange"
+    layout="prev, pager, next, total, sizes"
+    v-if="properties.meta"
+  ></el-pagination>
 </div>
 </template>
 
 <script>
 export default {
   computed: {
-    tableDataProperties () {
-      return this.$store.getters['properties'].data
+    properties () {
+      return this.$store.getters['properties']
     },
   },
   data () {
@@ -131,13 +143,30 @@ export default {
         storeys: undefined,
       },
       loading: false,
+      pagination: {
+        per_page: 3,
+        page: 1,
+      },
     }
   },
   methods: {
-    async filterProperties() {
+    clearFilter () {
+    },
+    currentChange (val) {
+      this.pagination.page = val
+      this.filterProperties()
+    },
+    async filterProperties(page = null) {
       this.loading = true
-      await this.$store.dispatch('filterProperties', this.filter)
+      if (page) {
+        this.pagination.page = page
+      }
+      await this.$store.dispatch('filterProperties', {...this.filter, ...this.pagination})
       this.loading = false
+    },
+    sizeChange (val) {
+      this.pagination.per_page = val
+      this.filterProperties()
     },
   },
   mounted () {

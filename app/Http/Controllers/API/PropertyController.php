@@ -72,7 +72,7 @@ class PropertyController extends Controller
      */
     public function filter(Request $request)
     {
-        $per_page = $request->per_page ?? 15;
+        $per_page = $request->per_page ?? 3;
         $name = $request->name;
         $priceFrom = $request->priceFrom;
         $priceTo = $request->priceTo;
