@@ -1,5 +1,17 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["/js/app"],{
 
+/***/ "./node_modules/@babel/runtime/regenerator/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
+
+
+/***/ }),
+
 /***/ "./node_modules/async-validator/es/index.js":
 /*!**************************************************!*\
   !*** ./node_modules/async-validator/es/index.js ***!
@@ -3518,6 +3530,25 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3525,6 +3556,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    tableDataProperties: function tableDataProperties() {
+      return this.$store.getters['properties'].data;
+    }
+  },
+  data: function data() {
+    return {
+      columns: ['Name', 'Price', 'Bedrooms', 'Bathrooms', 'Storeys', 'Garages'],
+      filter: {
+        bathrooms: null,
+        bedrooms: null,
+        garages: null,
+        name: null,
+        price: {
+          from: null,
+          to: null
+        },
+        storeys: null
+      },
+      loading: false
+    };
+  },
+  methods: {
+    filterProperties: function filterProperties() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this.$store.dispatch('filterProperties', _this.filter);
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  },
+  mounted: function mounted() {
+    this.filterProperties();
+  },
   name: 'PageSearch'
 });
 
@@ -81352,6 +81429,765 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/regenerator-runtime/runtime.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var runtime = (function (exports) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  function define(obj, key, value) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+    return obj[key];
+  }
+  try {
+    // IE 8 has a broken Object.defineProperty that only works on DOM objects.
+    define({}, "");
+  } catch (err) {
+    define = function(obj, key, value) {
+      return obj[key] = value;
+    };
+  }
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  exports.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunction.displayName = define(
+    GeneratorFunctionPrototype,
+    toStringTagSymbol,
+    "GeneratorFunction"
+  );
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      define(prototype, method, function(arg) {
+        return this._invoke(method, arg);
+      });
+    });
+  }
+
+  exports.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  exports.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      define(genFun, toStringTagSymbol, "GeneratorFunction");
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  exports.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator, PromiseImpl) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return PromiseImpl.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return PromiseImpl.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  exports.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    if (PromiseImpl === void 0) PromiseImpl = Promise;
+
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList),
+      PromiseImpl
+    );
+
+    return exports.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  define(Gp, toStringTagSymbol, "Generator");
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  exports.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  exports.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+   true ? module.exports : undefined
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/resize-observer-polyfill/dist/ResizeObserver.es.js":
 /*!*************************************************************************!*\
   !*** ./node_modules/resize-observer-polyfill/dist/ResizeObserver.es.js ***!
@@ -83228,6 +84064,2132 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-axios/dist/vue-axios.es5.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vue-axios/dist/vue-axios.es5.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _createForOfIteratorHelper(o, allowArrayLike) {
+  var it;
+
+  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+
+      var F = function () {};
+
+      return {
+        s: F,
+        n: function () {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function (e) {
+          throw e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function () {
+      it = o[Symbol.iterator]();
+    },
+    n: function () {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function (e) {
+      didErr = true;
+      err = e;
+    },
+    f: function () {
+      try {
+        if (!normalCompletion && it.return != null) it.return();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
+}
+
+function createCommonjsModule(fn, basedir, module) {
+	return module = {
+		path: basedir,
+		exports: {},
+		require: function (path, base) {
+			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+		}
+	}, fn(module, module.exports), module.exports;
+}
+
+function commonjsRequire () {
+	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+}
+
+// Note: this is the semver.org version of the spec that it implements
+// Not necessarily the package version of this code.
+var SEMVER_SPEC_VERSION = '2.0.0';
+var MAX_LENGTH = 256;
+var MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+/* istanbul ignore next */
+9007199254740991; // Max safe segment length for coercion.
+
+var MAX_SAFE_COMPONENT_LENGTH = 16;
+var constants = {
+  SEMVER_SPEC_VERSION: SEMVER_SPEC_VERSION,
+  MAX_LENGTH: MAX_LENGTH,
+  MAX_SAFE_INTEGER: MAX_SAFE_INTEGER,
+  MAX_SAFE_COMPONENT_LENGTH: MAX_SAFE_COMPONENT_LENGTH
+};
+
+var debug = (typeof process === "undefined" ? "undefined" : _typeof(process)) === 'object' && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG) ? function () {
+  var _console;
+
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return (_console = console).error.apply(_console, ['SEMVER'].concat(args));
+} : function () {};
+var debug_1 = debug;
+
+var re_1 = createCommonjsModule(function (module, exports) {
+  var MAX_SAFE_COMPONENT_LENGTH = constants.MAX_SAFE_COMPONENT_LENGTH;
+  exports = module.exports = {}; // The actual regexps go on exports.re
+
+  var re = exports.re = [];
+  var src = exports.src = [];
+  var t = exports.t = {};
+  var R = 0;
+
+  var createToken = function createToken(name, value, isGlobal) {
+    var index = R++;
+    debug_1(index, value);
+    t[name] = index;
+    src[index] = value;
+    re[index] = new RegExp(value, isGlobal ? 'g' : undefined);
+  }; // The following Regular Expressions can be used for tokenizing,
+  // validating, and parsing SemVer version strings.
+  // ## Numeric Identifier
+  // A single `0`, or a non-zero digit followed by zero or more digits.
+
+
+  createToken('NUMERICIDENTIFIER', '0|[1-9]\\d*');
+  createToken('NUMERICIDENTIFIERLOOSE', '[0-9]+'); // ## Non-numeric Identifier
+  // Zero or more digits, followed by a letter or hyphen, and then zero or
+  // more letters, digits, or hyphens.
+
+  createToken('NONNUMERICIDENTIFIER', '\\d*[a-zA-Z-][a-zA-Z0-9-]*'); // ## Main Version
+  // Three dot-separated numeric identifiers.
+
+  createToken('MAINVERSION', "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")"));
+  createToken('MAINVERSIONLOOSE', "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")")); // ## Pre-release Version Identifier
+  // A numeric identifier, or a non-numeric identifier.
+
+  createToken('PRERELEASEIDENTIFIER', "(?:".concat(src[t.NUMERICIDENTIFIER], "|").concat(src[t.NONNUMERICIDENTIFIER], ")"));
+  createToken('PRERELEASEIDENTIFIERLOOSE', "(?:".concat(src[t.NUMERICIDENTIFIERLOOSE], "|").concat(src[t.NONNUMERICIDENTIFIER], ")")); // ## Pre-release Version
+  // Hyphen, followed by one or more dot-separated pre-release version
+  // identifiers.
+
+  createToken('PRERELEASE', "(?:-(".concat(src[t.PRERELEASEIDENTIFIER], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIER], ")*))"));
+  createToken('PRERELEASELOOSE', "(?:-?(".concat(src[t.PRERELEASEIDENTIFIERLOOSE], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIERLOOSE], ")*))")); // ## Build Metadata Identifier
+  // Any combination of digits, letters, or hyphens.
+
+  createToken('BUILDIDENTIFIER', '[0-9A-Za-z-]+'); // ## Build Metadata
+  // Plus sign, followed by one or more period-separated build metadata
+  // identifiers.
+
+  createToken('BUILD', "(?:\\+(".concat(src[t.BUILDIDENTIFIER], "(?:\\.").concat(src[t.BUILDIDENTIFIER], ")*))")); // ## Full Version String
+  // A main version, followed optionally by a pre-release version and
+  // build metadata.
+  // Note that the only major, minor, patch, and pre-release sections of
+  // the version string are capturing groups.  The build metadata is not a
+  // capturing group, because it should not ever be used in version
+  // comparison.
+
+  createToken('FULLPLAIN', "v?".concat(src[t.MAINVERSION]).concat(src[t.PRERELEASE], "?").concat(src[t.BUILD], "?"));
+  createToken('FULL', "^".concat(src[t.FULLPLAIN], "$")); // like full, but allows v1.2.3 and =1.2.3, which people do sometimes.
+  // also, 1.0.0alpha1 (prerelease without the hyphen) which is pretty
+  // common in the npm registry.
+
+  createToken('LOOSEPLAIN', "[v=\\s]*".concat(src[t.MAINVERSIONLOOSE]).concat(src[t.PRERELEASELOOSE], "?").concat(src[t.BUILD], "?"));
+  createToken('LOOSE', "^".concat(src[t.LOOSEPLAIN], "$"));
+  createToken('GTLT', '((?:<|>)?=?)'); // Something like "2.*" or "1.2.x".
+  // Note that "x.x" is a valid xRange identifer, meaning "any version"
+  // Only the first item is strictly required.
+
+  createToken('XRANGEIDENTIFIERLOOSE', "".concat(src[t.NUMERICIDENTIFIERLOOSE], "|x|X|\\*"));
+  createToken('XRANGEIDENTIFIER', "".concat(src[t.NUMERICIDENTIFIER], "|x|X|\\*"));
+  createToken('XRANGEPLAIN', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:".concat(src[t.PRERELEASE], ")?").concat(src[t.BUILD], "?") + ")?)?");
+  createToken('XRANGEPLAINLOOSE', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:".concat(src[t.PRERELEASELOOSE], ")?").concat(src[t.BUILD], "?") + ")?)?");
+  createToken('XRANGE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAIN], "$"));
+  createToken('XRANGELOOSE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAINLOOSE], "$")); // Coercion.
+  // Extract anything that could conceivably be a part of a valid semver
+
+  createToken('COERCE', "".concat('(^|[^\\d])' + '(\\d{1,').concat(MAX_SAFE_COMPONENT_LENGTH, "})") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:$|[^\\d])");
+  createToken('COERCERTL', src[t.COERCE], true); // Tilde ranges.
+  // Meaning is "reasonably at or greater than"
+
+  createToken('LONETILDE', '(?:~>?)');
+  createToken('TILDETRIM', "(\\s*)".concat(src[t.LONETILDE], "\\s+"), true);
+  exports.tildeTrimReplace = '$1~';
+  createToken('TILDE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAIN], "$"));
+  createToken('TILDELOOSE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAINLOOSE], "$")); // Caret ranges.
+  // Meaning is "at least and backwards compatible with"
+
+  createToken('LONECARET', '(?:\\^)');
+  createToken('CARETTRIM', "(\\s*)".concat(src[t.LONECARET], "\\s+"), true);
+  exports.caretTrimReplace = '$1^';
+  createToken('CARET', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAIN], "$"));
+  createToken('CARETLOOSE', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAINLOOSE], "$")); // A simple gt/lt/eq thing, or just "" to indicate "any version"
+
+  createToken('COMPARATORLOOSE', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], ")$|^$"));
+  createToken('COMPARATOR', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.FULLPLAIN], ")$|^$")); // An expression to strip any whitespace between the gtlt and the thing
+  // it modifies, so that `> 1.2.3` ==> `>1.2.3`
+
+  createToken('COMPARATORTRIM', "(\\s*)".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], "|").concat(src[t.XRANGEPLAIN], ")"), true);
+  exports.comparatorTrimReplace = '$1$2$3'; // Something like `1.2.3 - 1.2.4`
+  // Note that these all use the loose form, because they'll be
+  // checked against either the strict or loose comparator form
+  // later.
+
+  createToken('HYPHENRANGE', "^\\s*(".concat(src[t.XRANGEPLAIN], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAIN], ")") + "\\s*$");
+  createToken('HYPHENRANGELOOSE', "^\\s*(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s*$"); // Star ranges basically just allow anything at all.
+
+  createToken('STAR', '(<|>)?=?\\s*\\*'); // >=0.0.0 is like a star
+
+  createToken('GTE0', '^\\s*>=\\s*0\.0\.0\\s*$');
+  createToken('GTE0PRE', '^\\s*>=\\s*0\.0\.0-0\\s*$');
+});
+
+var numeric = /^[0-9]+$/;
+
+var compareIdentifiers = function compareIdentifiers(a, b) {
+  var anum = numeric.test(a);
+  var bnum = numeric.test(b);
+
+  if (anum && bnum) {
+    a = +a;
+    b = +b;
+  }
+
+  return a === b ? 0 : anum && !bnum ? -1 : bnum && !anum ? 1 : a < b ? -1 : 1;
+};
+
+var rcompareIdentifiers = function rcompareIdentifiers(a, b) {
+  return compareIdentifiers(b, a);
+};
+
+var identifiers = {
+  compareIdentifiers: compareIdentifiers,
+  rcompareIdentifiers: rcompareIdentifiers
+};
+
+var MAX_LENGTH$1 = constants.MAX_LENGTH,
+    MAX_SAFE_INTEGER$1 = constants.MAX_SAFE_INTEGER;
+var re = re_1.re,
+    t = re_1.t;
+var compareIdentifiers$1 = identifiers.compareIdentifiers;
+
+var SemVer = /*#__PURE__*/function () {
+  function SemVer(version, options) {
+    _classCallCheck(this, SemVer);
+
+    if (!options || _typeof(options) !== 'object') {
+      options = {
+        loose: !!options,
+        includePrerelease: false
+      };
+    }
+
+    if (version instanceof SemVer) {
+      if (version.loose === !!options.loose && version.includePrerelease === !!options.includePrerelease) {
+        return version;
+      } else {
+        version = version.version;
+      }
+    } else if (typeof version !== 'string') {
+      throw new TypeError("Invalid Version: ".concat(version));
+    }
+
+    if (version.length > MAX_LENGTH$1) {
+      throw new TypeError("version is longer than ".concat(MAX_LENGTH$1, " characters"));
+    }
+
+    debug_1('SemVer', version, options);
+    this.options = options;
+    this.loose = !!options.loose; // this isn't actually relevant for versions, but keep it so that we
+    // don't run into trouble passing this.options around.
+
+    this.includePrerelease = !!options.includePrerelease;
+    var m = version.trim().match(options.loose ? re[t.LOOSE] : re[t.FULL]);
+
+    if (!m) {
+      throw new TypeError("Invalid Version: ".concat(version));
+    }
+
+    this.raw = version; // these are actually numbers
+
+    this.major = +m[1];
+    this.minor = +m[2];
+    this.patch = +m[3];
+
+    if (this.major > MAX_SAFE_INTEGER$1 || this.major < 0) {
+      throw new TypeError('Invalid major version');
+    }
+
+    if (this.minor > MAX_SAFE_INTEGER$1 || this.minor < 0) {
+      throw new TypeError('Invalid minor version');
+    }
+
+    if (this.patch > MAX_SAFE_INTEGER$1 || this.patch < 0) {
+      throw new TypeError('Invalid patch version');
+    } // numberify any prerelease numeric ids
+
+
+    if (!m[4]) {
+      this.prerelease = [];
+    } else {
+      this.prerelease = m[4].split('.').map(function (id) {
+        if (/^[0-9]+$/.test(id)) {
+          var num = +id;
+
+          if (num >= 0 && num < MAX_SAFE_INTEGER$1) {
+            return num;
+          }
+        }
+
+        return id;
+      });
+    }
+
+    this.build = m[5] ? m[5].split('.') : [];
+    this.format();
+  }
+
+  _createClass(SemVer, [{
+    key: "format",
+    value: function format() {
+      this.version = "".concat(this.major, ".").concat(this.minor, ".").concat(this.patch);
+
+      if (this.prerelease.length) {
+        this.version += "-".concat(this.prerelease.join('.'));
+      }
+
+      return this.version;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.version;
+    }
+  }, {
+    key: "compare",
+    value: function compare(other) {
+      debug_1('SemVer.compare', this.version, this.options, other);
+
+      if (!(other instanceof SemVer)) {
+        if (typeof other === 'string' && other === this.version) {
+          return 0;
+        }
+
+        other = new SemVer(other, this.options);
+      }
+
+      if (other.version === this.version) {
+        return 0;
+      }
+
+      return this.compareMain(other) || this.comparePre(other);
+    }
+  }, {
+    key: "compareMain",
+    value: function compareMain(other) {
+      if (!(other instanceof SemVer)) {
+        other = new SemVer(other, this.options);
+      }
+
+      return compareIdentifiers$1(this.major, other.major) || compareIdentifiers$1(this.minor, other.minor) || compareIdentifiers$1(this.patch, other.patch);
+    }
+  }, {
+    key: "comparePre",
+    value: function comparePre(other) {
+      if (!(other instanceof SemVer)) {
+        other = new SemVer(other, this.options);
+      } // NOT having a prerelease is > having one
+
+
+      if (this.prerelease.length && !other.prerelease.length) {
+        return -1;
+      } else if (!this.prerelease.length && other.prerelease.length) {
+        return 1;
+      } else if (!this.prerelease.length && !other.prerelease.length) {
+        return 0;
+      }
+
+      var i = 0;
+
+      do {
+        var a = this.prerelease[i];
+        var b = other.prerelease[i];
+        debug_1('prerelease compare', i, a, b);
+
+        if (a === undefined && b === undefined) {
+          return 0;
+        } else if (b === undefined) {
+          return 1;
+        } else if (a === undefined) {
+          return -1;
+        } else if (a === b) {
+          continue;
+        } else {
+          return compareIdentifiers$1(a, b);
+        }
+      } while (++i);
+    }
+  }, {
+    key: "compareBuild",
+    value: function compareBuild(other) {
+      if (!(other instanceof SemVer)) {
+        other = new SemVer(other, this.options);
+      }
+
+      var i = 0;
+
+      do {
+        var a = this.build[i];
+        var b = other.build[i];
+        debug_1('prerelease compare', i, a, b);
+
+        if (a === undefined && b === undefined) {
+          return 0;
+        } else if (b === undefined) {
+          return 1;
+        } else if (a === undefined) {
+          return -1;
+        } else if (a === b) {
+          continue;
+        } else {
+          return compareIdentifiers$1(a, b);
+        }
+      } while (++i);
+    } // preminor will bump the version up to the next minor release, and immediately
+    // down to pre-release. premajor and prepatch work the same way.
+
+  }, {
+    key: "inc",
+    value: function inc(release, identifier) {
+      switch (release) {
+        case 'premajor':
+          this.prerelease.length = 0;
+          this.patch = 0;
+          this.minor = 0;
+          this.major++;
+          this.inc('pre', identifier);
+          break;
+
+        case 'preminor':
+          this.prerelease.length = 0;
+          this.patch = 0;
+          this.minor++;
+          this.inc('pre', identifier);
+          break;
+
+        case 'prepatch':
+          // If this is already a prerelease, it will bump to the next version
+          // drop any prereleases that might already exist, since they are not
+          // relevant at this point.
+          this.prerelease.length = 0;
+          this.inc('patch', identifier);
+          this.inc('pre', identifier);
+          break;
+        // If the input is a non-prerelease version, this acts the same as
+        // prepatch.
+
+        case 'prerelease':
+          if (this.prerelease.length === 0) {
+            this.inc('patch', identifier);
+          }
+
+          this.inc('pre', identifier);
+          break;
+
+        case 'major':
+          // If this is a pre-major version, bump up to the same major version.
+          // Otherwise increment major.
+          // 1.0.0-5 bumps to 1.0.0
+          // 1.1.0 bumps to 2.0.0
+          if (this.minor !== 0 || this.patch !== 0 || this.prerelease.length === 0) {
+            this.major++;
+          }
+
+          this.minor = 0;
+          this.patch = 0;
+          this.prerelease = [];
+          break;
+
+        case 'minor':
+          // If this is a pre-minor version, bump up to the same minor version.
+          // Otherwise increment minor.
+          // 1.2.0-5 bumps to 1.2.0
+          // 1.2.1 bumps to 1.3.0
+          if (this.patch !== 0 || this.prerelease.length === 0) {
+            this.minor++;
+          }
+
+          this.patch = 0;
+          this.prerelease = [];
+          break;
+
+        case 'patch':
+          // If this is not a pre-release version, it will increment the patch.
+          // If it is a pre-release it will bump up to the same patch version.
+          // 1.2.0-5 patches to 1.2.0
+          // 1.2.0 patches to 1.2.1
+          if (this.prerelease.length === 0) {
+            this.patch++;
+          }
+
+          this.prerelease = [];
+          break;
+        // This probably shouldn't be used publicly.
+        // 1.0.0 'pre' would become 1.0.0-0 which is the wrong direction.
+
+        case 'pre':
+          if (this.prerelease.length === 0) {
+            this.prerelease = [0];
+          } else {
+            var i = this.prerelease.length;
+
+            while (--i >= 0) {
+              if (typeof this.prerelease[i] === 'number') {
+                this.prerelease[i]++;
+                i = -2;
+              }
+            }
+
+            if (i === -1) {
+              // didn't increment anything
+              this.prerelease.push(0);
+            }
+          }
+
+          if (identifier) {
+            // 1.2.0-beta.1 bumps to 1.2.0-beta.2,
+            // 1.2.0-beta.fooblz or 1.2.0-beta bumps to 1.2.0-beta.0
+            if (this.prerelease[0] === identifier) {
+              if (isNaN(this.prerelease[1])) {
+                this.prerelease = [identifier, 0];
+              }
+            } else {
+              this.prerelease = [identifier, 0];
+            }
+          }
+
+          break;
+
+        default:
+          throw new Error("invalid increment argument: ".concat(release));
+      }
+
+      this.format();
+      this.raw = this.version;
+      return this;
+    }
+  }]);
+
+  return SemVer;
+}();
+
+var semver = SemVer;
+
+var MAX_LENGTH$2 = constants.MAX_LENGTH;
+var re$1 = re_1.re,
+    t$1 = re_1.t;
+
+var parse = function parse(version, options) {
+  if (!options || _typeof(options) !== 'object') {
+    options = {
+      loose: !!options,
+      includePrerelease: false
+    };
+  }
+
+  if (version instanceof semver) {
+    return version;
+  }
+
+  if (typeof version !== 'string') {
+    return null;
+  }
+
+  if (version.length > MAX_LENGTH$2) {
+    return null;
+  }
+
+  var r = options.loose ? re$1[t$1.LOOSE] : re$1[t$1.FULL];
+
+  if (!r.test(version)) {
+    return null;
+  }
+
+  try {
+    return new semver(version, options);
+  } catch (er) {
+    return null;
+  }
+};
+
+var parse_1 = parse;
+
+var valid = function valid(version, options) {
+  var v = parse_1(version, options);
+  return v ? v.version : null;
+};
+
+var valid_1 = valid;
+
+var clean = function clean(version, options) {
+  var s = parse_1(version.trim().replace(/^[=v]+/, ''), options);
+  return s ? s.version : null;
+};
+
+var clean_1 = clean;
+
+var inc = function inc(version, release, options, identifier) {
+  if (typeof options === 'string') {
+    identifier = options;
+    options = undefined;
+  }
+
+  try {
+    return new semver(version, options).inc(release, identifier).version;
+  } catch (er) {
+    return null;
+  }
+};
+
+var inc_1 = inc;
+
+var compare = function compare(a, b, loose) {
+  return new semver(a, loose).compare(new semver(b, loose));
+};
+
+var compare_1 = compare;
+
+var eq = function eq(a, b, loose) {
+  return compare_1(a, b, loose) === 0;
+};
+
+var eq_1 = eq;
+
+var diff = function diff(version1, version2) {
+  if (eq_1(version1, version2)) {
+    return null;
+  } else {
+    var v1 = parse_1(version1);
+    var v2 = parse_1(version2);
+    var hasPre = v1.prerelease.length || v2.prerelease.length;
+    var prefix = hasPre ? 'pre' : '';
+    var defaultResult = hasPre ? 'prerelease' : '';
+
+    for (var key in v1) {
+      if (key === 'major' || key === 'minor' || key === 'patch') {
+        if (v1[key] !== v2[key]) {
+          return prefix + key;
+        }
+      }
+    }
+
+    return defaultResult; // may be undefined
+  }
+};
+
+var diff_1 = diff;
+
+var major = function major(a, loose) {
+  return new semver(a, loose).major;
+};
+
+var major_1 = major;
+
+var minor = function minor(a, loose) {
+  return new semver(a, loose).minor;
+};
+
+var minor_1 = minor;
+
+var patch = function patch(a, loose) {
+  return new semver(a, loose).patch;
+};
+
+var patch_1 = patch;
+
+var prerelease = function prerelease(version, options) {
+  var parsed = parse_1(version, options);
+  return parsed && parsed.prerelease.length ? parsed.prerelease : null;
+};
+
+var prerelease_1 = prerelease;
+
+var rcompare = function rcompare(a, b, loose) {
+  return compare_1(b, a, loose);
+};
+
+var rcompare_1 = rcompare;
+
+var compareLoose = function compareLoose(a, b) {
+  return compare_1(a, b, true);
+};
+
+var compareLoose_1 = compareLoose;
+
+var compareBuild = function compareBuild(a, b, loose) {
+  var versionA = new semver(a, loose);
+  var versionB = new semver(b, loose);
+  return versionA.compare(versionB) || versionA.compareBuild(versionB);
+};
+
+var compareBuild_1 = compareBuild;
+
+var sort = function sort(list, loose) {
+  return list.sort(function (a, b) {
+    return compareBuild_1(a, b, loose);
+  });
+};
+
+var sort_1 = sort;
+
+var rsort = function rsort(list, loose) {
+  return list.sort(function (a, b) {
+    return compareBuild_1(b, a, loose);
+  });
+};
+
+var rsort_1 = rsort;
+
+var gt = function gt(a, b, loose) {
+  return compare_1(a, b, loose) > 0;
+};
+
+var gt_1 = gt;
+
+var lt = function lt(a, b, loose) {
+  return compare_1(a, b, loose) < 0;
+};
+
+var lt_1 = lt;
+
+var neq = function neq(a, b, loose) {
+  return compare_1(a, b, loose) !== 0;
+};
+
+var neq_1 = neq;
+
+var gte = function gte(a, b, loose) {
+  return compare_1(a, b, loose) >= 0;
+};
+
+var gte_1 = gte;
+
+var lte = function lte(a, b, loose) {
+  return compare_1(a, b, loose) <= 0;
+};
+
+var lte_1 = lte;
+
+var cmp = function cmp(a, op, b, loose) {
+  switch (op) {
+    case '===':
+      if (_typeof(a) === 'object') a = a.version;
+      if (_typeof(b) === 'object') b = b.version;
+      return a === b;
+
+    case '!==':
+      if (_typeof(a) === 'object') a = a.version;
+      if (_typeof(b) === 'object') b = b.version;
+      return a !== b;
+
+    case '':
+    case '=':
+    case '==':
+      return eq_1(a, b, loose);
+
+    case '!=':
+      return neq_1(a, b, loose);
+
+    case '>':
+      return gt_1(a, b, loose);
+
+    case '>=':
+      return gte_1(a, b, loose);
+
+    case '<':
+      return lt_1(a, b, loose);
+
+    case '<=':
+      return lte_1(a, b, loose);
+
+    default:
+      throw new TypeError("Invalid operator: ".concat(op));
+  }
+};
+
+var cmp_1 = cmp;
+
+var re$2 = re_1.re,
+    t$2 = re_1.t;
+
+var coerce = function coerce(version, options) {
+  if (version instanceof semver) {
+    return version;
+  }
+
+  if (typeof version === 'number') {
+    version = String(version);
+  }
+
+  if (typeof version !== 'string') {
+    return null;
+  }
+
+  options = options || {};
+  var match = null;
+
+  if (!options.rtl) {
+    match = version.match(re$2[t$2.COERCE]);
+  } else {
+    // Find the right-most coercible string that does not share
+    // a terminus with a more left-ward coercible string.
+    // Eg, '1.2.3.4' wants to coerce '2.3.4', not '3.4' or '4'
+    //
+    // Walk through the string checking with a /g regexp
+    // Manually set the index so as to pick up overlapping matches.
+    // Stop when we get a match that ends at the string end, since no
+    // coercible string can be more right-ward without the same terminus.
+    var next;
+
+    while ((next = re$2[t$2.COERCERTL].exec(version)) && (!match || match.index + match[0].length !== version.length)) {
+      if (!match || next.index + next[0].length !== match.index + match[0].length) {
+        match = next;
+      }
+
+      re$2[t$2.COERCERTL].lastIndex = next.index + next[1].length + next[2].length;
+    } // leave it in a clean state
+
+
+    re$2[t$2.COERCERTL].lastIndex = -1;
+  }
+
+  if (match === null) return null;
+  return parse_1("".concat(match[2], ".").concat(match[3] || '0', ".").concat(match[4] || '0'), options);
+};
+
+var coerce_1 = coerce;
+
+var Range = /*#__PURE__*/function () {
+  function Range(range, options) {
+    var _this = this;
+
+    _classCallCheck(this, Range);
+
+    if (!options || _typeof(options) !== 'object') {
+      options = {
+        loose: !!options,
+        includePrerelease: false
+      };
+    }
+
+    if (range instanceof Range) {
+      if (range.loose === !!options.loose && range.includePrerelease === !!options.includePrerelease) {
+        return range;
+      } else {
+        return new Range(range.raw, options);
+      }
+    }
+
+    if (range instanceof comparator) {
+      // just put it in the set and return
+      this.raw = range.value;
+      this.set = [[range]];
+      this.format();
+      return this;
+    }
+
+    this.options = options;
+    this.loose = !!options.loose;
+    this.includePrerelease = !!options.includePrerelease; // First, split based on boolean or ||
+
+    this.raw = range;
+    this.set = range.split(/\s*\|\|\s*/) // map the range to a 2d array of comparators
+    .map(function (range) {
+      return _this.parseRange(range.trim());
+    }) // throw out any comparator lists that are empty
+    // this generally means that it was not a valid range, which is allowed
+    // in loose mode, but will still throw if the WHOLE range is invalid.
+    .filter(function (c) {
+      return c.length;
+    });
+
+    if (!this.set.length) {
+      throw new TypeError("Invalid SemVer Range: ".concat(range));
+    }
+
+    this.format();
+  }
+
+  _createClass(Range, [{
+    key: "format",
+    value: function format() {
+      this.range = this.set.map(function (comps) {
+        return comps.join(' ').trim();
+      }).join('||').trim();
+      return this.range;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.range;
+    }
+  }, {
+    key: "parseRange",
+    value: function parseRange(range) {
+      var _this2 = this;
+
+      var loose = this.options.loose;
+      range = range.trim(); // `1.2.3 - 1.2.4` => `>=1.2.3 <=1.2.4`
+
+      var hr = loose ? re$3[t$3.HYPHENRANGELOOSE] : re$3[t$3.HYPHENRANGE];
+      range = range.replace(hr, hyphenReplace(this.options.includePrerelease));
+      debug_1('hyphen replace', range); // `> 1.2.3 < 1.2.5` => `>1.2.3 <1.2.5`
+
+      range = range.replace(re$3[t$3.COMPARATORTRIM], comparatorTrimReplace);
+      debug_1('comparator trim', range, re$3[t$3.COMPARATORTRIM]); // `~ 1.2.3` => `~1.2.3`
+
+      range = range.replace(re$3[t$3.TILDETRIM], tildeTrimReplace); // `^ 1.2.3` => `^1.2.3`
+
+      range = range.replace(re$3[t$3.CARETTRIM], caretTrimReplace); // normalize spaces
+
+      range = range.split(/\s+/).join(' '); // At this point, the range is completely trimmed and
+      // ready to be split into comparators.
+
+      var compRe = loose ? re$3[t$3.COMPARATORLOOSE] : re$3[t$3.COMPARATOR];
+      return range.split(' ').map(function (comp) {
+        return parseComparator(comp, _this2.options);
+      }).join(' ').split(/\s+/).map(function (comp) {
+        return replaceGTE0(comp, _this2.options);
+      }) // in loose mode, throw out any that are not valid comparators
+      .filter(this.options.loose ? function (comp) {
+        return !!comp.match(compRe);
+      } : function () {
+        return true;
+      }).map(function (comp) {
+        return new comparator(comp, _this2.options);
+      });
+    }
+  }, {
+    key: "intersects",
+    value: function intersects(range, options) {
+      if (!(range instanceof Range)) {
+        throw new TypeError('a Range is required');
+      }
+
+      return this.set.some(function (thisComparators) {
+        return isSatisfiable(thisComparators, options) && range.set.some(function (rangeComparators) {
+          return isSatisfiable(rangeComparators, options) && thisComparators.every(function (thisComparator) {
+            return rangeComparators.every(function (rangeComparator) {
+              return thisComparator.intersects(rangeComparator, options);
+            });
+          });
+        });
+      });
+    } // if ANY of the sets match ALL of its comparators, then pass
+
+  }, {
+    key: "test",
+    value: function test(version) {
+      if (!version) {
+        return false;
+      }
+
+      if (typeof version === 'string') {
+        try {
+          version = new semver(version, this.options);
+        } catch (er) {
+          return false;
+        }
+      }
+
+      for (var i = 0; i < this.set.length; i++) {
+        if (testSet(this.set[i], version, this.options)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+  }]);
+
+  return Range;
+}();
+
+var range = Range;
+var re$3 = re_1.re,
+    t$3 = re_1.t,
+    comparatorTrimReplace = re_1.comparatorTrimReplace,
+    tildeTrimReplace = re_1.tildeTrimReplace,
+    caretTrimReplace = re_1.caretTrimReplace; // take a set of comparators and determine whether there
+// exists a version which can satisfy it
+
+var isSatisfiable = function isSatisfiable(comparators, options) {
+  var result = true;
+  var remainingComparators = comparators.slice();
+  var testComparator = remainingComparators.pop();
+
+  while (result && remainingComparators.length) {
+    result = remainingComparators.every(function (otherComparator) {
+      return testComparator.intersects(otherComparator, options);
+    });
+    testComparator = remainingComparators.pop();
+  }
+
+  return result;
+}; // comprised of xranges, tildes, stars, and gtlt's at this point.
+// already replaced the hyphen ranges
+// turn into a set of JUST comparators.
+
+
+var parseComparator = function parseComparator(comp, options) {
+  debug_1('comp', comp, options);
+  comp = replaceCarets(comp, options);
+  debug_1('caret', comp);
+  comp = replaceTildes(comp, options);
+  debug_1('tildes', comp);
+  comp = replaceXRanges(comp, options);
+  debug_1('xrange', comp);
+  comp = replaceStars(comp, options);
+  debug_1('stars', comp);
+  return comp;
+};
+
+var isX = function isX(id) {
+  return !id || id.toLowerCase() === 'x' || id === '*';
+}; // ~, ~> --> * (any, kinda silly)
+// ~2, ~2.x, ~2.x.x, ~>2, ~>2.x ~>2.x.x --> >=2.0.0 <3.0.0-0
+// ~2.0, ~2.0.x, ~>2.0, ~>2.0.x --> >=2.0.0 <2.1.0-0
+// ~1.2, ~1.2.x, ~>1.2, ~>1.2.x --> >=1.2.0 <1.3.0-0
+// ~1.2.3, ~>1.2.3 --> >=1.2.3 <1.3.0-0
+// ~1.2.0, ~>1.2.0 --> >=1.2.0 <1.3.0-0
+
+
+var replaceTildes = function replaceTildes(comp, options) {
+  return comp.trim().split(/\s+/).map(function (comp) {
+    return replaceTilde(comp, options);
+  }).join(' ');
+};
+
+var replaceTilde = function replaceTilde(comp, options) {
+  var r = options.loose ? re$3[t$3.TILDELOOSE] : re$3[t$3.TILDE];
+  return comp.replace(r, function (_, M, m, p, pr) {
+    debug_1('tilde', comp, _, M, m, p, pr);
+    var ret;
+
+    if (isX(M)) {
+      ret = '';
+    } else if (isX(m)) {
+      ret = ">=".concat(M, ".0.0 <").concat(+M + 1, ".0.0-0");
+    } else if (isX(p)) {
+      // ~1.2 == >=1.2.0 <1.3.0-0
+      ret = ">=".concat(M, ".").concat(m, ".0 <").concat(M, ".").concat(+m + 1, ".0-0");
+    } else if (pr) {
+      debug_1('replaceTilde pr', pr);
+      ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(M, ".").concat(+m + 1, ".0-0");
+    } else {
+      // ~1.2.3 == >=1.2.3 <1.3.0-0
+      ret = ">=".concat(M, ".").concat(m, ".").concat(p, " <").concat(M, ".").concat(+m + 1, ".0-0");
+    }
+
+    debug_1('tilde return', ret);
+    return ret;
+  });
+}; // ^ --> * (any, kinda silly)
+// ^2, ^2.x, ^2.x.x --> >=2.0.0 <3.0.0-0
+// ^2.0, ^2.0.x --> >=2.0.0 <3.0.0-0
+// ^1.2, ^1.2.x --> >=1.2.0 <2.0.0-0
+// ^1.2.3 --> >=1.2.3 <2.0.0-0
+// ^1.2.0 --> >=1.2.0 <2.0.0-0
+
+
+var replaceCarets = function replaceCarets(comp, options) {
+  return comp.trim().split(/\s+/).map(function (comp) {
+    return replaceCaret(comp, options);
+  }).join(' ');
+};
+
+var replaceCaret = function replaceCaret(comp, options) {
+  debug_1('caret', comp, options);
+  var r = options.loose ? re$3[t$3.CARETLOOSE] : re$3[t$3.CARET];
+  var z = options.includePrerelease ? '-0' : '';
+  return comp.replace(r, function (_, M, m, p, pr) {
+    debug_1('caret', comp, _, M, m, p, pr);
+    var ret;
+
+    if (isX(M)) {
+      ret = '';
+    } else if (isX(m)) {
+      ret = ">=".concat(M, ".0.0").concat(z, " <").concat(+M + 1, ".0.0-0");
+    } else if (isX(p)) {
+      if (M === '0') {
+        ret = ">=".concat(M, ".").concat(m, ".0").concat(z, " <").concat(M, ".").concat(+m + 1, ".0-0");
+      } else {
+        ret = ">=".concat(M, ".").concat(m, ".0").concat(z, " <").concat(+M + 1, ".0.0-0");
+      }
+    } else if (pr) {
+      debug_1('replaceCaret pr', pr);
+
+      if (M === '0') {
+        if (m === '0') {
+          ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(M, ".").concat(m, ".").concat(+p + 1, "-0");
+        } else {
+          ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(M, ".").concat(+m + 1, ".0-0");
+        }
+      } else {
+        ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(+M + 1, ".0.0-0");
+      }
+    } else {
+      debug_1('no pr');
+
+      if (M === '0') {
+        if (m === '0') {
+          ret = ">=".concat(M, ".").concat(m, ".").concat(p).concat(z, " <").concat(M, ".").concat(m, ".").concat(+p + 1, "-0");
+        } else {
+          ret = ">=".concat(M, ".").concat(m, ".").concat(p).concat(z, " <").concat(M, ".").concat(+m + 1, ".0-0");
+        }
+      } else {
+        ret = ">=".concat(M, ".").concat(m, ".").concat(p, " <").concat(+M + 1, ".0.0-0");
+      }
+    }
+
+    debug_1('caret return', ret);
+    return ret;
+  });
+};
+
+var replaceXRanges = function replaceXRanges(comp, options) {
+  debug_1('replaceXRanges', comp, options);
+  return comp.split(/\s+/).map(function (comp) {
+    return replaceXRange(comp, options);
+  }).join(' ');
+};
+
+var replaceXRange = function replaceXRange(comp, options) {
+  comp = comp.trim();
+  var r = options.loose ? re$3[t$3.XRANGELOOSE] : re$3[t$3.XRANGE];
+  return comp.replace(r, function (ret, gtlt, M, m, p, pr) {
+    debug_1('xRange', comp, ret, gtlt, M, m, p, pr);
+    var xM = isX(M);
+    var xm = xM || isX(m);
+    var xp = xm || isX(p);
+    var anyX = xp;
+
+    if (gtlt === '=' && anyX) {
+      gtlt = '';
+    } // if we're including prereleases in the match, then we need
+    // to fix this to -0, the lowest possible prerelease value
+
+
+    pr = options.includePrerelease ? '-0' : '';
+
+    if (xM) {
+      if (gtlt === '>' || gtlt === '<') {
+        // nothing is allowed
+        ret = '<0.0.0-0';
+      } else {
+        // nothing is forbidden
+        ret = '*';
+      }
+    } else if (gtlt && anyX) {
+      // we know patch is an x, because we have any x at all.
+      // replace X with 0
+      if (xm) {
+        m = 0;
+      }
+
+      p = 0;
+
+      if (gtlt === '>') {
+        // >1 => >=2.0.0
+        // >1.2 => >=1.3.0
+        gtlt = '>=';
+
+        if (xm) {
+          M = +M + 1;
+          m = 0;
+          p = 0;
+        } else {
+          m = +m + 1;
+          p = 0;
+        }
+      } else if (gtlt === '<=') {
+        // <=0.7.x is actually <0.8.0, since any 0.7.x should
+        // pass.  Similarly, <=7.x is actually <8.0.0, etc.
+        gtlt = '<';
+
+        if (xm) {
+          M = +M + 1;
+        } else {
+          m = +m + 1;
+        }
+      }
+
+      if (gtlt === '<') pr = '-0';
+      ret = "".concat(gtlt + M, ".").concat(m, ".").concat(p).concat(pr);
+    } else if (xm) {
+      ret = ">=".concat(M, ".0.0").concat(pr, " <").concat(+M + 1, ".0.0-0");
+    } else if (xp) {
+      ret = ">=".concat(M, ".").concat(m, ".0").concat(pr, " <").concat(M, ".").concat(+m + 1, ".0-0");
+    }
+
+    debug_1('xRange return', ret);
+    return ret;
+  });
+}; // Because * is AND-ed with everything else in the comparator,
+// and '' means "any version", just remove the *s entirely.
+
+
+var replaceStars = function replaceStars(comp, options) {
+  debug_1('replaceStars', comp, options); // Looseness is ignored here.  star is always as loose as it gets!
+
+  return comp.trim().replace(re$3[t$3.STAR], '');
+};
+
+var replaceGTE0 = function replaceGTE0(comp, options) {
+  debug_1('replaceGTE0', comp, options);
+  return comp.trim().replace(re$3[options.includePrerelease ? t$3.GTE0PRE : t$3.GTE0], '');
+}; // This function is passed to string.replace(re[t.HYPHENRANGE])
+// M, m, patch, prerelease, build
+// 1.2 - 3.4.5 => >=1.2.0 <=3.4.5
+// 1.2.3 - 3.4 => >=1.2.0 <3.5.0-0 Any 3.4.x will do
+// 1.2 - 3.4 => >=1.2.0 <3.5.0-0
+
+
+var hyphenReplace = function hyphenReplace(incPr) {
+  return function ($0, from, fM, fm, fp, fpr, fb, to, tM, tm, tp, tpr, tb) {
+    if (isX(fM)) {
+      from = '';
+    } else if (isX(fm)) {
+      from = ">=".concat(fM, ".0.0").concat(incPr ? '-0' : '');
+    } else if (isX(fp)) {
+      from = ">=".concat(fM, ".").concat(fm, ".0").concat(incPr ? '-0' : '');
+    } else if (fpr) {
+      from = ">=".concat(from);
+    } else {
+      from = ">=".concat(from).concat(incPr ? '-0' : '');
+    }
+
+    if (isX(tM)) {
+      to = '';
+    } else if (isX(tm)) {
+      to = "<".concat(+tM + 1, ".0.0-0");
+    } else if (isX(tp)) {
+      to = "<".concat(tM, ".").concat(+tm + 1, ".0-0");
+    } else if (tpr) {
+      to = "<=".concat(tM, ".").concat(tm, ".").concat(tp, "-").concat(tpr);
+    } else if (incPr) {
+      to = "<".concat(tM, ".").concat(tm, ".").concat(+tp + 1, "-0");
+    } else {
+      to = "<=".concat(to);
+    }
+
+    return "".concat(from, " ").concat(to).trim();
+  };
+};
+
+var testSet = function testSet(set, version, options) {
+  for (var i = 0; i < set.length; i++) {
+    if (!set[i].test(version)) {
+      return false;
+    }
+  }
+
+  if (version.prerelease.length && !options.includePrerelease) {
+    // Find the set of versions that are allowed to have prereleases
+    // For example, ^1.2.3-pr.1 desugars to >=1.2.3-pr.1 <2.0.0
+    // That should allow `1.2.3-pr.2` to pass.
+    // However, `1.2.4-alpha.notready` should NOT be allowed,
+    // even though it's within the range set by the comparators.
+    for (var _i = 0; _i < set.length; _i++) {
+      debug_1(set[_i].semver);
+
+      if (set[_i].semver === comparator.ANY) {
+        continue;
+      }
+
+      if (set[_i].semver.prerelease.length > 0) {
+        var allowed = set[_i].semver;
+
+        if (allowed.major === version.major && allowed.minor === version.minor && allowed.patch === version.patch) {
+          return true;
+        }
+      }
+    } // Version has a -pre, but it's not one of the ones we like.
+
+
+    return false;
+  }
+
+  return true;
+};
+
+var ANY = Symbol('SemVer ANY'); // hoisted class for cyclic dependency
+
+var Comparator = /*#__PURE__*/function () {
+  _createClass(Comparator, null, [{
+    key: "ANY",
+    get: function get() {
+      return ANY;
+    }
+  }]);
+
+  function Comparator(comp, options) {
+    _classCallCheck(this, Comparator);
+
+    if (!options || _typeof(options) !== 'object') {
+      options = {
+        loose: !!options,
+        includePrerelease: false
+      };
+    }
+
+    if (comp instanceof Comparator) {
+      if (comp.loose === !!options.loose) {
+        return comp;
+      } else {
+        comp = comp.value;
+      }
+    }
+
+    debug_1('comparator', comp, options);
+    this.options = options;
+    this.loose = !!options.loose;
+    this.parse(comp);
+
+    if (this.semver === ANY) {
+      this.value = '';
+    } else {
+      this.value = this.operator + this.semver.version;
+    }
+
+    debug_1('comp', this);
+  }
+
+  _createClass(Comparator, [{
+    key: "parse",
+    value: function parse(comp) {
+      var r = this.options.loose ? re$4[t$4.COMPARATORLOOSE] : re$4[t$4.COMPARATOR];
+      var m = comp.match(r);
+
+      if (!m) {
+        throw new TypeError("Invalid comparator: ".concat(comp));
+      }
+
+      this.operator = m[1] !== undefined ? m[1] : '';
+
+      if (this.operator === '=') {
+        this.operator = '';
+      } // if it literally is just '>' or '' then allow anything.
+
+
+      if (!m[2]) {
+        this.semver = ANY;
+      } else {
+        this.semver = new semver(m[2], this.options.loose);
+      }
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.value;
+    }
+  }, {
+    key: "test",
+    value: function test(version) {
+      debug_1('Comparator.test', version, this.options.loose);
+
+      if (this.semver === ANY || version === ANY) {
+        return true;
+      }
+
+      if (typeof version === 'string') {
+        try {
+          version = new semver(version, this.options);
+        } catch (er) {
+          return false;
+        }
+      }
+
+      return cmp_1(version, this.operator, this.semver, this.options);
+    }
+  }, {
+    key: "intersects",
+    value: function intersects(comp, options) {
+      if (!(comp instanceof Comparator)) {
+        throw new TypeError('a Comparator is required');
+      }
+
+      if (!options || _typeof(options) !== 'object') {
+        options = {
+          loose: !!options,
+          includePrerelease: false
+        };
+      }
+
+      if (this.operator === '') {
+        if (this.value === '') {
+          return true;
+        }
+
+        return new range(comp.value, options).test(this.value);
+      } else if (comp.operator === '') {
+        if (comp.value === '') {
+          return true;
+        }
+
+        return new range(this.value, options).test(comp.semver);
+      }
+
+      var sameDirectionIncreasing = (this.operator === '>=' || this.operator === '>') && (comp.operator === '>=' || comp.operator === '>');
+      var sameDirectionDecreasing = (this.operator === '<=' || this.operator === '<') && (comp.operator === '<=' || comp.operator === '<');
+      var sameSemVer = this.semver.version === comp.semver.version;
+      var differentDirectionsInclusive = (this.operator === '>=' || this.operator === '<=') && (comp.operator === '>=' || comp.operator === '<=');
+      var oppositeDirectionsLessThan = cmp_1(this.semver, '<', comp.semver, options) && (this.operator === '>=' || this.operator === '>') && (comp.operator === '<=' || comp.operator === '<');
+      var oppositeDirectionsGreaterThan = cmp_1(this.semver, '>', comp.semver, options) && (this.operator === '<=' || this.operator === '<') && (comp.operator === '>=' || comp.operator === '>');
+      return sameDirectionIncreasing || sameDirectionDecreasing || sameSemVer && differentDirectionsInclusive || oppositeDirectionsLessThan || oppositeDirectionsGreaterThan;
+    }
+  }]);
+
+  return Comparator;
+}();
+
+var comparator = Comparator;
+var re$4 = re_1.re,
+    t$4 = re_1.t;
+
+var satisfies = function satisfies(version, range$1, options) {
+  try {
+    range$1 = new range(range$1, options);
+  } catch (er) {
+    return false;
+  }
+
+  return range$1.test(version);
+};
+
+var satisfies_1 = satisfies;
+
+var toComparators = function toComparators(range$1, options) {
+  return new range(range$1, options).set.map(function (comp) {
+    return comp.map(function (c) {
+      return c.value;
+    }).join(' ').trim().split(' ');
+  });
+};
+
+var toComparators_1 = toComparators;
+
+var maxSatisfying = function maxSatisfying(versions, range$1, options) {
+  var max = null;
+  var maxSV = null;
+  var rangeObj = null;
+
+  try {
+    rangeObj = new range(range$1, options);
+  } catch (er) {
+    return null;
+  }
+
+  versions.forEach(function (v) {
+    if (rangeObj.test(v)) {
+      // satisfies(v, range, options)
+      if (!max || maxSV.compare(v) === -1) {
+        // compare(max, v, true)
+        max = v;
+        maxSV = new semver(max, options);
+      }
+    }
+  });
+  return max;
+};
+
+var maxSatisfying_1 = maxSatisfying;
+
+var minSatisfying = function minSatisfying(versions, range$1, options) {
+  var min = null;
+  var minSV = null;
+  var rangeObj = null;
+
+  try {
+    rangeObj = new range(range$1, options);
+  } catch (er) {
+    return null;
+  }
+
+  versions.forEach(function (v) {
+    if (rangeObj.test(v)) {
+      // satisfies(v, range, options)
+      if (!min || minSV.compare(v) === 1) {
+        // compare(min, v, true)
+        min = v;
+        minSV = new semver(min, options);
+      }
+    }
+  });
+  return min;
+};
+
+var minSatisfying_1 = minSatisfying;
+
+var minVersion = function minVersion(range$1, loose) {
+  range$1 = new range(range$1, loose);
+  var minver = new semver('0.0.0');
+
+  if (range$1.test(minver)) {
+    return minver;
+  }
+
+  minver = new semver('0.0.0-0');
+
+  if (range$1.test(minver)) {
+    return minver;
+  }
+
+  minver = null;
+
+  for (var i = 0; i < range$1.set.length; ++i) {
+    var comparators = range$1.set[i];
+    comparators.forEach(function (comparator) {
+      // Clone to avoid manipulating the comparator's semver object.
+      var compver = new semver(comparator.semver.version);
+
+      switch (comparator.operator) {
+        case '>':
+          if (compver.prerelease.length === 0) {
+            compver.patch++;
+          } else {
+            compver.prerelease.push(0);
+          }
+
+          compver.raw = compver.format();
+
+        /* fallthrough */
+
+        case '':
+        case '>=':
+          if (!minver || gt_1(minver, compver)) {
+            minver = compver;
+          }
+
+          break;
+
+        case '<':
+        case '<=':
+          /* Ignore maximum versions */
+          break;
+
+        /* istanbul ignore next */
+
+        default:
+          throw new Error("Unexpected operation: ".concat(comparator.operator));
+      }
+    });
+  }
+
+  if (minver && range$1.test(minver)) {
+    return minver;
+  }
+
+  return null;
+};
+
+var minVersion_1 = minVersion;
+
+var validRange = function validRange(range$1, options) {
+  try {
+    // Return '*' instead of '' so that truthiness works.
+    // This will throw if it's invalid anyway
+    return new range(range$1, options).range || '*';
+  } catch (er) {
+    return null;
+  }
+};
+
+var valid$1 = validRange;
+
+var ANY$1 = comparator.ANY;
+
+var outside = function outside(version, range$1, hilo, options) {
+  version = new semver(version, options);
+  range$1 = new range(range$1, options);
+  var gtfn, ltefn, ltfn, comp, ecomp;
+
+  switch (hilo) {
+    case '>':
+      gtfn = gt_1;
+      ltefn = lte_1;
+      ltfn = lt_1;
+      comp = '>';
+      ecomp = '>=';
+      break;
+
+    case '<':
+      gtfn = lt_1;
+      ltefn = gte_1;
+      ltfn = gt_1;
+      comp = '<';
+      ecomp = '<=';
+      break;
+
+    default:
+      throw new TypeError('Must provide a hilo val of "<" or ">"');
+  } // If it satisifes the range it is not outside
+
+
+  if (satisfies_1(version, range$1, options)) {
+    return false;
+  } // From now on, variable terms are as if we're in "gtr" mode.
+  // but note that everything is flipped for the "ltr" function.
+
+
+  var _loop = function _loop(i) {
+    var comparators = range$1.set[i];
+    var high = null;
+    var low = null;
+    comparators.forEach(function (comparator$1) {
+      if (comparator$1.semver === ANY$1) {
+        comparator$1 = new comparator('>=0.0.0');
+      }
+
+      high = high || comparator$1;
+      low = low || comparator$1;
+
+      if (gtfn(comparator$1.semver, high.semver, options)) {
+        high = comparator$1;
+      } else if (ltfn(comparator$1.semver, low.semver, options)) {
+        low = comparator$1;
+      }
+    }); // If the edge version comparator has a operator then our version
+    // isn't outside it
+
+    if (high.operator === comp || high.operator === ecomp) {
+      return {
+        v: false
+      };
+    } // If the lowest version comparator has an operator and our version
+    // is less than it then it isn't higher than the range
+
+
+    if ((!low.operator || low.operator === comp) && ltefn(version, low.semver)) {
+      return {
+        v: false
+      };
+    } else if (low.operator === ecomp && ltfn(version, low.semver)) {
+      return {
+        v: false
+      };
+    }
+  };
+
+  for (var i = 0; i < range$1.set.length; ++i) {
+    var _ret = _loop(i);
+
+    if (_typeof(_ret) === "object") return _ret.v;
+  }
+
+  return true;
+};
+
+var outside_1 = outside;
+
+var gtr = function gtr(version, range, options) {
+  return outside_1(version, range, '>', options);
+};
+
+var gtr_1 = gtr;
+
+var ltr = function ltr(version, range, options) {
+  return outside_1(version, range, '<', options);
+};
+
+var ltr_1 = ltr;
+
+var intersects = function intersects(r1, r2, options) {
+  r1 = new range(r1, options);
+  r2 = new range(r2, options);
+  return r1.intersects(r2);
+};
+
+var intersects_1 = intersects;
+
+// that includes the same versions that the original range does
+// If the original range is shorter than the simplified one, return that.
+
+var simplify = function simplify(versions, range, options) {
+  var set = [];
+  var min = null;
+  var prev = null;
+  var v = versions.sort(function (a, b) {
+    return compare_1(a, b, options);
+  });
+
+  var _iterator = _createForOfIteratorHelper(v),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var version = _step.value;
+      var included = satisfies_1(version, range, options);
+
+      if (included) {
+        prev = version;
+        if (!min) min = version;
+      } else {
+        if (prev) {
+          set.push([min, prev]);
+        }
+
+        prev = null;
+        min = null;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  if (min) set.push([min, null]);
+  var ranges = [];
+
+  for (var _i = 0, _set = set; _i < _set.length; _i++) {
+    var _set$_i = _slicedToArray(_set[_i], 2),
+        _min = _set$_i[0],
+        max = _set$_i[1];
+
+    if (_min === max) ranges.push(_min);else if (!max && _min === v[0]) ranges.push('*');else if (!max) ranges.push(">=".concat(_min));else if (_min === v[0]) ranges.push("<=".concat(max));else ranges.push("".concat(_min, " - ").concat(max));
+  }
+
+  var simplified = ranges.join(' || ');
+  var original = typeof range.raw === 'string' ? range.raw : String(range);
+  return simplified.length < original.length ? simplified : range;
+};
+
+var ANY$2 = comparator.ANY; // Complex range `r1 || r2 || ...` is a subset of `R1 || R2 || ...` iff:
+// - Every simple range `r1, r2, ...` is a subset of some `R1, R2, ...`
+//
+// Simple range `c1 c2 ...` is a subset of simple range `C1 C2 ...` iff:
+// - If c is only the ANY comparator
+//   - If C is only the ANY comparator, return true
+//   - Else return false
+// - Let EQ be the set of = comparators in c
+// - If EQ is more than one, return true (null set)
+// - Let GT be the highest > or >= comparator in c
+// - Let LT be the lowest < or <= comparator in c
+// - If GT and LT, and GT.semver > LT.semver, return true (null set)
+// - If EQ
+//   - If GT, and EQ does not satisfy GT, return true (null set)
+//   - If LT, and EQ does not satisfy LT, return true (null set)
+//   - If EQ satisfies every C, return true
+//   - Else return false
+// - If GT
+//   - If GT is lower than any > or >= comp in C, return false
+//   - If GT is >=, and GT.semver does not satisfy every C, return false
+// - If LT
+//   - If LT.semver is greater than that of any > comp in C, return false
+//   - If LT is <=, and LT.semver does not satisfy every C, return false
+// - If any C is a = range, and GT or LT are set, return false
+// - Else return true
+
+var subset = function subset(sub, dom, options) {
+  sub = new range(sub, options);
+  dom = new range(dom, options);
+  var sawNonNull = false;
+
+  var _iterator = _createForOfIteratorHelper(sub.set),
+      _step;
+
+  try {
+    OUTER: for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var simpleSub = _step.value;
+
+      var _iterator2 = _createForOfIteratorHelper(dom.set),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var simpleDom = _step2.value;
+          var isSub = simpleSubset(simpleSub, simpleDom, options);
+          sawNonNull = sawNonNull || isSub !== null;
+          if (isSub) continue OUTER;
+        } // the null set is a subset of everything, but null simple ranges in
+        // a complex range should be ignored.  so if we saw a non-null range,
+        // then we know this isn't a subset, but if EVERY simple range was null,
+        // then it is a subset.
+
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      if (sawNonNull) return false;
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return true;
+};
+
+var simpleSubset = function simpleSubset(sub, dom, options) {
+  if (sub.length === 1 && sub[0].semver === ANY$2) return dom.length === 1 && dom[0].semver === ANY$2;
+  var eqSet = new Set();
+  var gt, lt;
+
+  var _iterator3 = _createForOfIteratorHelper(sub),
+      _step3;
+
+  try {
+    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+      var c = _step3.value;
+      if (c.operator === '>' || c.operator === '>=') gt = higherGT(gt, c, options);else if (c.operator === '<' || c.operator === '<=') lt = lowerLT(lt, c, options);else eqSet.add(c.semver);
+    }
+  } catch (err) {
+    _iterator3.e(err);
+  } finally {
+    _iterator3.f();
+  }
+
+  if (eqSet.size > 1) return null;
+  var gtltComp;
+
+  if (gt && lt) {
+    gtltComp = compare_1(gt.semver, lt.semver, options);
+    if (gtltComp > 0) return null;else if (gtltComp === 0 && (gt.operator !== '>=' || lt.operator !== '<=')) return null;
+  } // will iterate one or zero times
+
+
+  var _iterator4 = _createForOfIteratorHelper(eqSet),
+      _step4;
+
+  try {
+    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+      var eq = _step4.value;
+      if (gt && !satisfies_1(eq, String(gt), options)) return null;
+      if (lt && !satisfies_1(eq, String(lt), options)) return null;
+
+      var _iterator6 = _createForOfIteratorHelper(dom),
+          _step6;
+
+      try {
+        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+          var _c = _step6.value;
+          if (!satisfies_1(eq, String(_c), options)) return false;
+        }
+      } catch (err) {
+        _iterator6.e(err);
+      } finally {
+        _iterator6.f();
+      }
+
+      return true;
+    }
+  } catch (err) {
+    _iterator4.e(err);
+  } finally {
+    _iterator4.f();
+  }
+
+  var higher, lower;
+  var hasDomLT, hasDomGT;
+
+  var _iterator5 = _createForOfIteratorHelper(dom),
+      _step5;
+
+  try {
+    for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+      var _c2 = _step5.value;
+      hasDomGT = hasDomGT || _c2.operator === '>' || _c2.operator === '>=';
+      hasDomLT = hasDomLT || _c2.operator === '<' || _c2.operator === '<=';
+
+      if (gt) {
+        if (_c2.operator === '>' || _c2.operator === '>=') {
+          higher = higherGT(gt, _c2, options);
+          if (higher === _c2) return false;
+        } else if (gt.operator === '>=' && !satisfies_1(gt.semver, String(_c2), options)) return false;
+      }
+
+      if (lt) {
+        if (_c2.operator === '<' || _c2.operator === '<=') {
+          lower = lowerLT(lt, _c2, options);
+          if (lower === _c2) return false;
+        } else if (lt.operator === '<=' && !satisfies_1(lt.semver, String(_c2), options)) return false;
+      }
+
+      if (!_c2.operator && (lt || gt) && gtltComp !== 0) return false;
+    } // if there was a < or >, and nothing in the dom, then must be false
+    // UNLESS it was limited by another range in the other direction.
+    // Eg, >1.0.0 <1.0.1 is still a subset of <2.0.0
+
+  } catch (err) {
+    _iterator5.e(err);
+  } finally {
+    _iterator5.f();
+  }
+
+  if (gt && hasDomLT && !lt && gtltComp !== 0) return false;
+  if (lt && hasDomGT && !gt && gtltComp !== 0) return false;
+  return true;
+}; // >=1.2.3 is lower than >1.2.3
+
+
+var higherGT = function higherGT(a, b, options) {
+  if (!a) return b;
+  var comp = compare_1(a.semver, b.semver, options);
+  return comp > 0 ? a : comp < 0 ? b : b.operator === '>' && a.operator === '>=' ? b : a;
+}; // <=1.2.3 is higher than <1.2.3
+
+
+var lowerLT = function lowerLT(a, b, options) {
+  if (!a) return b;
+  var comp = compare_1(a.semver, b.semver, options);
+  return comp < 0 ? a : comp > 0 ? b : b.operator === '<' && a.operator === '<=' ? b : a;
+};
+
+var subset_1 = subset;
+
+var semver$1 = {
+  re: re_1.re,
+  src: re_1.src,
+  tokens: re_1.t,
+  SEMVER_SPEC_VERSION: constants.SEMVER_SPEC_VERSION,
+  SemVer: semver,
+  compareIdentifiers: identifiers.compareIdentifiers,
+  rcompareIdentifiers: identifiers.rcompareIdentifiers,
+  parse: parse_1,
+  valid: valid_1,
+  clean: clean_1,
+  inc: inc_1,
+  diff: diff_1,
+  major: major_1,
+  minor: minor_1,
+  patch: patch_1,
+  prerelease: prerelease_1,
+  compare: compare_1,
+  rcompare: rcompare_1,
+  compareLoose: compareLoose_1,
+  compareBuild: compareBuild_1,
+  sort: sort_1,
+  rsort: rsort_1,
+  gt: gt_1,
+  lt: lt_1,
+  eq: eq_1,
+  neq: neq_1,
+  gte: gte_1,
+  lte: lte_1,
+  cmp: cmp_1,
+  coerce: coerce_1,
+  Comparator: comparator,
+  Range: range,
+  satisfies: satisfies_1,
+  toComparators: toComparators_1,
+  maxSatisfying: maxSatisfying_1,
+  minSatisfying: minSatisfying_1,
+  minVersion: minVersion_1,
+  validRange: valid$1,
+  outside: outside_1,
+  gtr: gtr_1,
+  ltr: ltr_1,
+  intersects: intersects_1,
+  simplifyRange: simplify,
+  subset: subset_1
+};
+
+(function () {
+  /**
+   * Install plugin
+   * @param app
+   * @param axios
+   */
+  function plugin(app, axios) {
+    if (plugin.installed) {
+      return;
+    }
+
+    if (!axios) {
+      console.error('You have to install axios');
+      return;
+    }
+
+    if (semver$1.valid(app.version) == null) {
+      console.error('Unkown vue version');
+      return;
+    }
+
+    plugin.installed = true;
+
+    if (semver$1.lt(app.version, '3.0.0')) {
+      Object.defineProperties(app.prototype, {
+        axios: {
+          get: function get() {
+            return axios;
+          }
+        },
+        $http: {
+          get: function get() {
+            return axios;
+          }
+        }
+      });
+    } else {
+      app.config.globalProperties.axios = axios;
+      app.config.globalProperties.$http = axios;
+    }
+
+    app.axios = axios;
+    app.$http = axios;
+  }
+
+  if (( false ? undefined : _typeof(exports)) == "object") {
+    module.exports = plugin;
+  } else if (true) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+      return plugin;
+    }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {}
+})();
+
+//# sourceMappingURL=vue-axios.es5.js.map
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/App.vue?vue&type=template&id=f348271a&":
 /*!*******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/App.vue?vue&type=template&id=f348271a& ***!
@@ -83283,7 +86245,7 @@ var render = function() {
           _c("el-menu-item", { attrs: { index: "/" } }, [_vm._v("Home")]),
           _vm._v(" "),
           _c("el-menu-item", { attrs: { index: "/search" } }, [
-            _vm._v("Search")
+            _vm._v("Search Property")
           ])
         ],
         1
@@ -83340,7 +86302,34 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\r\n  PageSearch\r\n")])
+  return _c(
+    "div",
+    [
+      _c(
+        "el-table",
+        {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
+          staticStyle: { width: "100%" },
+          attrs: { data: _vm.tableDataProperties }
+        },
+        _vm._l(_vm.columns, function(column) {
+          return _c("el-table-column", {
+            key: column,
+            attrs: { label: column, prop: column.toLowerCase() }
+          })
+        }),
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -87954,7 +90943,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(element_ui__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! element-ui/lib/theme-chalk/index.css */ "./node_modules/element-ui/lib/theme-chalk/index.css");
 /* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.es5.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -87975,13 +90968,16 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store(_store_index_
 
 Vue.use(element_ui__WEBPACK_IMPORTED_MODULE_5___default.a);
 
+
+Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_8___default.a, axios__WEBPACK_IMPORTED_MODULE_7___default.a);
+
 var app = new Vue({
   el: '#app',
   components: {},
   router: router,
   store: store,
   render: function render(h) {
-    return h(_App_vue__WEBPACK_IMPORTED_MODULE_7__["default"]);
+    return h(_App_vue__WEBPACK_IMPORTED_MODULE_9__["default"]);
   }
 });
 
@@ -88265,11 +91261,67 @@ var routes = [{
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {}
+  state: {
+    properties: {}
+  },
+  getters: {
+    properties: function properties(state) {
+      return state.properties;
+    }
+  },
+  mutations: {
+    setProperties: function setProperties(state, properties) {
+      state.properties = properties;
+    }
+  },
+  actions: {
+    filterProperties: function filterProperties(_ref, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var commit, filterString, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit;
+                _context.prev = 1;
+                filterString = payload.toString;
+                _context.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("http://localhost:3000/api/v1/properties/filter?".concat(filterString), {
+                  headers: {}
+                });
+
+              case 5:
+                response = _context.sent;
+                commit('setProperties', response.data);
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](1);
+                console.log('=== filterProperties error : ', _context.t0);
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 9]]);
+      }))();
+    }
+  }
 });
 
 /***/ }),
