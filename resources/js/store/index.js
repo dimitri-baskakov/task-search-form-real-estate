@@ -20,8 +20,11 @@ export default {
 	actions: {
 		async filterProperties ({ commit }, payload) {
 			try {
-				let filterString = payload.toString
-				const response = await axios.get(`http://localhost:3000/api/v1/properties/filter?${filterString}`, { headers: {} })
+				let params = payload
+				const response = await axios.get(`http://localhost:3000/api/v1/properties/filter`, {
+					headers: {},
+					params
+				})
 				commit('setProperties', response.data)
 			} catch (error) {
 				console.log('=== filterProperties error : ', error)

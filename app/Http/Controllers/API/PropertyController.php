@@ -72,8 +72,41 @@ class PropertyController extends Controller
      */
     public function filter(Request $request)
     {
-        \Log::info($request);
-        return new PropertyCollection(Property::paginate());
+        $per_page = $request->per_page ?? 15;
+        $name = $request->name;
+        $priceFrom = $request->priceFrom;
+        $priceTo = $request->priceTo;
+        $bedrooms = $request->bedrooms;
+        $bathrooms = $request->bathrooms;
+        $storeys = $request->storeys;
+        $garages = $request->garages;
+
+        $query = Property::query()
+            ->when($name, function($query, $name) {
+                return $query->where('name', 'like', "%{$name}%");
+            })
+            ->when($priceFrom, function($query, $priceFrom) {
+                return $query->where('price', '>=', $priceFrom);
+            })
+            ->when($priceTo, function($query, $priceTo) {
+                return $query->where('price', '<=', $priceTo);
+            })
+            ->when($bedrooms, function($query, $bedrooms) {
+                return $query->where('bedrooms', '=', $bedrooms);
+            })
+            ->when($bathrooms, function($query, $bathrooms) {
+                return $query->where('bathrooms', '=', $bathrooms);
+            })
+            ->when($storeys, function($query, $storeys) {
+                return $query->where('storeys', '=', $storeys);
+            })
+            ->when($garages, function($query, $garages) {
+                return $query->where('garages', '=', $garages);
+            })
+        ;
+        $properties = $query->paginate($per_page);
+
+        return new PropertyCollection($properties);
     }
 
 }
