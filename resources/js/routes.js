@@ -1,6 +1,7 @@
 import LayoutMain from './layouts/Main.vue'
 import Home from './pages/Home.vue'
 import Search from './pages/Search.vue'
+import Page404 from './pages/Page404.vue'
 
 export const routes = [
   {
@@ -17,4 +18,14 @@ export const routes = [
       },
     ]
   },
+  {
+    children: [
+      {
+        component: Page404,
+        path: "*",
+      },
+    ],
+    component: LayoutMain,
+    path: "/",
+  }
 ]

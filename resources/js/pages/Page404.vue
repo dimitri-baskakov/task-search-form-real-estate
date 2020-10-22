@@ -1,11 +1,11 @@
 <template>
 <div style="text-align: center; margin-top:20px;">
-  PageHome
+  404
 </div>
 </template>
 
 <script>
 export default {
-  name: 'PageHome',
+  name: 'Page404',
 }
 </script>

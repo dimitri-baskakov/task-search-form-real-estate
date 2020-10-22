@@ -2,19 +2,19 @@
 <div>
   <el-form
     :model="filter"
-    class=""
     label-width="120px"
     ref="filter"
+    style="margin-top: 20px;"
   >
     <el-row justify="center">
       <el-col :md="11" :xs="24" :sm="24">
-        <el-form-item label="Name">
+        <el-form-item label="Name" prop="name">
           <el-input
             placeholder="Filter by name"
             v-model="filter.name"
           ></el-input>
         </el-form-item>
-        <el-form-item label="Price">
+        <el-form-item label="Price" prop="price">
           <el-col :span="11">
             <el-input-number
               :max="1000000"
@@ -27,6 +27,7 @@
           <el-col
             :span="2"
             class="line"
+            style="text-align: center;"
           >-</el-col>
           <el-col :span="11">
             <el-input-number
@@ -38,7 +39,7 @@
             ></el-input-number>
           </el-col>
         </el-form-item>
-        <el-form-item label="Bedrooms">
+        <el-form-item label="Bedrooms" prop="bedrooms">
           <el-input-number
             :max="20"
             :min="0"
@@ -49,7 +50,7 @@
         </el-form-item>
       </el-col>
       <el-col :md="11" :xs="24" :sm="24">
-        <el-form-item label="Bathrooms">
+        <el-form-item label="Bathrooms" prop="bathrooms">
           <el-input-number
             :max="20"
             :min="0"
@@ -58,7 +59,7 @@
             v-model="filter.bathrooms"
           ></el-input-number>
         </el-form-item>
-        <el-form-item label="Storeys">
+        <el-form-item label="Storeys" prop="storeys">
           <el-input-number
             :max="20"
             :min="0"
@@ -67,7 +68,7 @@
             v-model="filter.storeys"
           ></el-input-number>
         </el-form-item>
-        <el-form-item label="Garages">
+        <el-form-item label="Garages" prop="garages">
           <el-input-number
             :max="20"
             :min="0"
@@ -111,6 +112,7 @@
     @current-change="currentChange"
     @size-change="sizeChange"
     layout="prev, pager, next, total, sizes"
+    style="margin-top: 20px;"
     v-if="properties.meta"
   ></el-pagination>
 </div>
@@ -151,6 +153,8 @@ export default {
   },
   methods: {
     clearFilter () {
+      this.$refs['filter'].resetFields()
+      this.filterProperties(1)
     },
     currentChange (val) {
       this.pagination.page = val

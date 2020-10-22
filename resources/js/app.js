@@ -26,7 +26,9 @@ Vue.use(ElementUI, { locale })
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, axios.create({
+  baseURL: 'http://localhost:3000/api/v1/',
+}))
 
 import App from './App.vue'
 

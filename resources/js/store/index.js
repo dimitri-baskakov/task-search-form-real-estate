@@ -1,4 +1,4 @@
-import axios from 'axios'
+import Vue from 'vue'
 
 export default {
 	state: {
@@ -20,10 +20,9 @@ export default {
 	actions: {
 		async filterProperties ({ commit }, payload) {
 			try {
-				let params = payload
-				const response = await axios.get(`http://localhost:3000/api/v1/properties/filter`, {
+				const response = await Vue.axios.get('properties/filter', {
 					headers: {},
-					params
+					params: payload,
 				})
 				commit('setProperties', response.data)
 			} catch (error) {
