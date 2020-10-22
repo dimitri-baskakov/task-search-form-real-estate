@@ -3481,16 +3481,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      activeLink: null
-    };
-  },
-  mounted: function mounted() {
-    var match = _.chain(this.$route.matched).sortBy(function (n) {
-      return n.path.length;
-    }).last().value();
-
-    this.activeLink = match.path;
+    return {};
   },
   name: 'LayoutMain'
 });
@@ -83284,7 +83275,7 @@ var render = function() {
         {
           attrs: {
             mode: "horizontal",
-            defaultActive: _vm.activeLink,
+            defaultActive: _vm.$route.path,
             router: ""
           }
         },
